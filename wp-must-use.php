@@ -3,7 +3,7 @@
 /**
  * The plugin bootstrap file
  *
- * A collection of Must-Use plugins for WordPress to use in 26B projects.
+ * A collection of Must-Use plugins for WordPress used in 26B projects.
  *
  * @copyright Copyright (C) 2024-2025, 26B - IT Consulting <hello@26b.io>
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher

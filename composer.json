@@ -1,6 +1,6 @@
 {
 	"name": "26b/wp-must-use",
-	"description": "",
+	"description": "A collection of Must-Use plugins for WordPress used in 26B projects.",
 	"license": "GPL-3.0",
 	"type": "wordpress-plugin",
 	"keywords": [
