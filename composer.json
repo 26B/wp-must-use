@@ -1,0 +1,54 @@
+{
+	"name": "26b/tsb-wp-plugin",
+	"description": "",
+	"license": "GPL-3.0",
+	"type": "wordpress-plugin",
+	"keywords": [
+		"wordpress"
+	],
+	"authors": [
+		{
+			"name": "26b",
+			"email": "hello@26b.io"
+		}
+	],
+	"require": {
+		"php": ">=8.2",
+		"26b/wp-framework": "~1.3.0",
+		"guzzlehttp/guzzle": "^7.7",
+		"monolog/monolog": "^3.6"
+	},
+	"require-dev": {
+		"26b/i18n-midoru": "1.0.0",
+		"26b/php-pre-commit": "^0.2.1",
+		"squizlabs/php_codesniffer": "^3.10",
+		"wp-coding-standards/wpcs": "^3.1",
+		"wp-cli/wp-cli": "^2.12"
+	},
+	"autoload": {
+		"psr-4": {
+			"TSB\\WP\\Plugin\\TSBPluginNamespace\\": "includes/classes/"
+		},
+		"files": [
+			"includes/helpers/helpers.php"
+		]
+	},
+	"scripts": {
+		"post-install-cmd": "php-pre-commit",
+		"post-update-cmd": "php-pre-commit",
+		"make-pots": [
+			"i18n-midoru make_pots"
+		],
+		"upload-pots": [
+			"i18n-midoru upload"
+		],
+		"download-translations": [
+			"i18n-midoru download"
+		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

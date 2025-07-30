@@ -1,0 +1,60 @@
+name: Build Stable Release
+on:
+  push:
+    branches:
+    - main
+    - client/*
+
+env:
+  branch_name: ${{ github.ref_name == 'main' && 'stable' || format('stable-{0}', github.ref_name) }}
+
+jobs:
+  stable:
+    name: Push (merge) to main
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Use desired version of NodeJS
+      uses: actions/setup-node@v4
+      with:
+          node-version-file: '.nvmrc'
+    - name: Set PHP version
+      uses: shivammathur/setup-php@v2
+      env:
+        COMPOSER_AUTH_JSON: |
+          {
+            "http-basic": {
+              "repo.packagist.com": {
+                "username": "token",
+                "password": "${{ secrets.PACKAGIST_TOKEN }}"
+              }
+            },
+            "github-oauth": {
+              "github.com": "${{ secrets.GITHUB_TOKEN }}"
+            }
+          }
+      with:
+        php-version: 8.2
+        tools: composer:v2, wp
+
+    - name: Check versions
+      run: |
+        npm -v
+        node -v
+        php -v
+        composer -v
+
+    - name: Install and build
+      run: |
+        mkdir release
+        composer install --no-dev --no-interaction --no-progress --optimize-autoloader --no-scripts
+        npm install
+        npm run release
+    - name: Push to Stable
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: ${{ env.branch_name }}
+        FOLDER: release
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
