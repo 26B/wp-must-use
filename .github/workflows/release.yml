@@ -1,0 +1,39 @@
+name: Release WordPress Plugin
+
+on:
+  push:
+    tags:
+      - "*-v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Switch PHP Version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Build assets for release
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-scripts
+          npm install
+          npm run build
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/
+            includes/
+            vendor/

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ruleset name="TSB-WordPress">
+  <description>26B coding standards for WordPress projects.</description>
+
+  <arg name="extensions" value="php,inc" />
+
+  <exclude-pattern>*/phpunit.xml*</exclude-pattern>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+
+  <!-- Yoda conditions, we must ignore -->
+  <rule ref="WordPress.PHP.YodaConditions.NotYoda">
+    <severity>0</severity>
+  </rule>
+
+  <!-- Ignore lowercase filenames -->
+  <rule ref="Generic.Files.LowercasedFilename.NotFound">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+    <severity>0</severity>
+  </rule>
+
+  <!-- Ignore Short Array Syntax -->
+  <rule ref="Universal.Arrays.DisallowShortArraySyntax">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="PSR2.ControlStructures.ElseIfDeclaration.NotAllowed">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="Squiz.ControlStructures.ElseIfDeclaration">
+    <!-- FIXME: Allowing elseif's until a fix is made/found for phpcs elseif colon syntax problem. -->
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="PSR12.Functions.ReturnTypeDeclaration.SpaceBeforeColon">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="WordPress.Security.EscapeOutput.ExceptionNotEscaped">
+    <severity>0</severity>
+  </rule>
+
+  <rule ref="WordPress-Extra" />
+</ruleset>
