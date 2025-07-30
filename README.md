@@ -85,11 +85,11 @@ To download translations for a specific project, add the name of the project (ke
 
 Things to replace in the code:
 
-- `tsb-wp-plugin` in the file `tsb-wp-plugin.php` for the plugin name.
-- `tsb-wp-plugin` for the text domain and plugin name.
-- `\TSBPluginNamespace` for the namespace.
-- `TSB_WP_PLUGIN` for constants.
-- `tsb_wp_plugin_frontend` for the JavaScript handle.
+- `wp-must-use` in the file `wp-must-use.php` for the plugin name.
+- `wp-must-use` for the text domain and plugin name.
+- `\WPMustUse` for the namespace.
+- `TSB_WP_PLUGIN_MUST_USE` for constants.
+- `wp_must_use_frontend` for the JavaScript handle.
 
 Add new projects to `i18n-midoru.json` if needed.
 
