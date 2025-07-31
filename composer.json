@@ -2,7 +2,7 @@
 	"name": "26b/wp-must-use",
 	"description": "A collection of Must-Use plugins for WordPress used in 26B projects.",
 	"license": "GPL-3.0",
-	"type": "wordpress-plugin",
+	"type": "composer-plugin",
 	"keywords": [
 		"wordpress"
 	],
@@ -13,12 +13,20 @@
 		}
 	],
 	"require": {
-		"php": ">=8.2"
+		"php": ">=8.2",
+		"composer-plugin-api": "*"
 	},
 	"require-dev": {
 		"26b/php-pre-commit": "^0.2.1",
 		"squizlabs/php_codesniffer": "^3.10",
-		"wp-coding-standards/wpcs": "^3.1"
+		"wp-coding-standards/wpcs": "^3.1",
+		"composer/composer": "^2.8"
+	},
+	"autoload": {
+		"psr-4": { "TSB\\WP\\MUPlugin\\": "src" }
+	},
+	"extra": {
+		"class": "TSB\\WP\\MUPlugin\\Composer"
 	},
 	"scripts": {
 		"post-install-cmd": "php-pre-commit",

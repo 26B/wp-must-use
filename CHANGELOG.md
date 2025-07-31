@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- On install/update/remove of the plugin, the mu-plugins will be copied to, or deleted from, the `wp-content/mu-plugins` directory.
+- Composer class to handle copying/deleting mu-plugins.
+
 ## [0.0.1] - 2025-07-30
 
 ### Added
