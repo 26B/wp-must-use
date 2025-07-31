@@ -88,6 +88,9 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		$local_plugins_path = dirname( __DIR__ ) . '/plugins/';
 		$mu_plugins_path    = $this->findMURelPath();
 
+		echo "Local plugins path: $local_plugins_path\n";
+		echo "Mu-plugins path: $mu_plugins_path\n";
+
 		if ( ! is_dir( $local_plugins_path ) ) {
 			echo "Local plugins path not found: $local_plugins_path\n";
 			return;
@@ -101,6 +104,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		// Copy all PHP files from local_plugins_path to mu_plugins_path
 		foreach ( glob( $local_plugins_path . '*.php' ) as $file ) {
 			$dest = rtrim( $mu_plugins_path, '/\\' ) . '/' . basename( $file );
+			echo "Copying $file to $dest\n";
 			if ( ! copy( $file, $dest ) ) {
 				echo "Failed to copy $file\n";
 			}
