@@ -2,15 +2,16 @@
 
 namespace TSB\WP\MUPlugin;
 
-/**
- * Use the necessary namespaces.
- */
 use Composer\Composer as ComposerComposer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\EventDispatcher\EventSubscriberInterface;
 
-
+/**
+ * Composer plugin to handle mu-plugins.
+ *
+ * @since Unreleased
+ */
 class Composer implements PluginInterface, EventSubscriberInterface {
 
 	/**
@@ -33,6 +34,8 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Required by PluginInterface: Deactivate the plugin.
 	 *
+	 * @since Unreleased
+	 *
 	 * @param Composer    $composer The main Composer object.
 	 * @param IOInterface $io       The I/O Helper object.
 	 * @return void
@@ -43,6 +46,8 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 
 	/**
 	 * Required by PluginInterface: Uninstall the plugin.
+	 *
+	 * @since Unreleased
 	 *
 	 * @param Composer    $composer The main Composer object.
 	 * @param IOInterface $io       The I/O Helper object.
@@ -57,6 +62,8 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	 * When `pre-autoload-dump` fires, run the `dumpRequireFile` method.
 	 * When `pre-package-install` fires, run the `overridePluginTypes` method.
 	 *
+	 * @since Unreleased
+	 *
 	 * @return array The event subscription map.
 	 */
 	public static function getSubscribedEvents() {
@@ -67,6 +74,14 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		);
 	}
 
+	/**
+	 * Copies mu-plugins from the local plugins directory to the mu-plugins directory.
+	 *
+	 * @since Unreleased
+	 *
+	 * @param \Composer\EventDispatcher\GenericEvent $event The event object.
+	 * @return void
+	 */
 	public function copyMUPlugins( $event ) : void {
 		// Get the package being worked on.
 		$operation = $event->getOperation();
@@ -106,6 +121,14 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		echo "26b/wp-must-use mu-plugins copied.\n";
 	}
 
+	/**
+	 * Deletes mu-plugins from the mu-plugins directory.
+	 *
+	 * @since Unreleased
+	 *
+	 * @param \Composer\EventDispatcher\GenericEvent $event The event object.
+	 * @return void
+	 */
 	public function deleteMUPlugins( $event ) : void {
 		// Get the package being worked on.
 		$operation = $event->getOperation();
@@ -145,6 +168,13 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		echo "26b/wp-must-use mu-plugins deleted.\n";
 	}
 
+	/**
+	 * Finds the relative path to the mu-plugins directory.
+	 *
+	 * @since Unreleased
+	 *
+	 * @return string|false The relative path to the mu-plugins directory, or false if not found.
+	 */
 	protected function findMURelPath() {
 		$path = false;
 		// Only keep going if we have install-paths in extras.
