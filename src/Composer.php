@@ -67,7 +67,20 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		);
 	}
 
-	public function copyMUPlugins() : void {
+	public function copyMUPlugins( $event ) : void {
+		// Get the package being worked on.
+		$operation = $event->getOperation();
+		if ( $operation instanceof \Composer\DependencyResolver\Operation\UpdateOperation ) {
+			$package = $operation->getInitialPackage();
+		} else {
+			$package = $operation->getPackage();
+		}
+
+		if ( $package->getName() !== '26b/wp-must-use' ) {
+			// Not the right package, skip.
+			return;
+		}
+
 		echo "Copying 26b/wp-must-use mu-plugins...\n";
 		$local_plugins_path = dirname( __DIR__ ) . '/plugins/';
 		$mu_plugins_path    = $this->findMURelPath();
@@ -93,7 +106,16 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		echo "26b/wp-must-use mu-plugins copied.\n";
 	}
 
-	public function deleteMUPlugins() : void {
+	public function deleteMUPlugins( $event ) : void {
+		// Get the package being worked on.
+		$operation = $event->getOperation();
+		$package   = $operation->getPackage();
+
+		if ( $package->getName() !== '26b/wp-must-use' ) {
+			// Not the right package, skip.
+			return;
+		}
+
 		echo "Deleting 26b/wp-must-use mu-plugins...\n";
 		$local_plugins_path = dirname( __DIR__ ) . '/plugins/';
 		$mu_plugins_path    = $this->findMURelPath();
