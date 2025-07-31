@@ -72,9 +72,6 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		$local_plugins_path = dirname( __DIR__ ) . '/plugins/';
 		$mu_plugins_path    = $this->findMURelPath();
 
-		echo $local_plugins_path . "\n";
-		echo $mu_plugins_path . "\n";
-
 		if ( ! is_dir( $local_plugins_path ) ) {
 			echo "Local plugins path not found: $local_plugins_path\n";
 			return;
@@ -88,12 +85,12 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		// Copy all PHP files from local_plugins_path to mu_plugins_path
 		foreach ( glob( $local_plugins_path . '*.php' ) as $file ) {
 			$dest = rtrim( $mu_plugins_path, '/\\' ) . '/' . basename( $file );
-			if ( copy( $file, $dest ) ) {
-				echo "Copied $file to $dest\n";
-			} else {
+			if ( ! copy( $file, $dest ) ) {
 				echo "Failed to copy $file\n";
 			}
 		}
+
+		echo "26b/wp-must-use mu-plugins copied.\n";
 	}
 
 	public function deleteMUPlugins() : void {
@@ -115,15 +112,15 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		foreach ( glob( $local_plugins_path . '*.php' ) as $file ) {
 			$target = rtrim( $mu_plugins_path, '/\\' ) . '/' . basename( $file );
 			if ( file_exists( $target ) ) {
-				if ( unlink( $target ) ) {
-					echo "Deleted $target\n";
-				} else {
+				if ( ! unlink( $target ) ) {
 					echo "Failed to delete $target\n";
 				}
 			} else {
 				echo "File not found: $target\n";
 			}
 		}
+
+		echo "26b/wp-must-use mu-plugins deleted.\n";
 	}
 
 	protected function findMURelPath() {
