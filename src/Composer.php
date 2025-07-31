@@ -10,7 +10,7 @@ use Composer\EventDispatcher\EventSubscriberInterface;
 /**
  * Composer plugin to handle mu-plugins.
  *
- * @since Unreleased
+ * @since 0.1.0
  */
 class Composer implements PluginInterface, EventSubscriberInterface {
 
@@ -34,7 +34,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Required by PluginInterface: Deactivate the plugin.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @param Composer    $composer The main Composer object.
 	 * @param IOInterface $io       The I/O Helper object.
@@ -47,7 +47,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Required by PluginInterface: Uninstall the plugin.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @param Composer    $composer The main Composer object.
 	 * @param IOInterface $io       The I/O Helper object.
@@ -62,7 +62,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	 * When `pre-autoload-dump` fires, run the `dumpRequireFile` method.
 	 * When `pre-package-install` fires, run the `overridePluginTypes` method.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @return array The event subscription map.
 	 */
@@ -77,7 +77,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Copies mu-plugins from the local plugins directory to the mu-plugins directory.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @param \Composer\EventDispatcher\GenericEvent $event The event object.
 	 * @return void
@@ -124,7 +124,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Deletes mu-plugins from the mu-plugins directory.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @param \Composer\EventDispatcher\GenericEvent $event The event object.
 	 * @return void
@@ -171,7 +171,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 	/**
 	 * Finds the relative path to the mu-plugins directory.
 	 *
-	 * @since Unreleased
+	 * @since 0.1.0
 	 *
 	 * @return string|false The relative path to the mu-plugins directory, or false if not found.
 	 */
