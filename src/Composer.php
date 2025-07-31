@@ -76,6 +76,9 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 			$package = $operation->getPackage();
 		}
 
+		echo $package->getName() . " is being processed.\n";
+		echo $operation->getOperationType() . " operation detected.\n";
+
 		if ( $package->getName() !== '26b/wp-must-use' ) {
 			// Not the right package, skip.
 			return;
