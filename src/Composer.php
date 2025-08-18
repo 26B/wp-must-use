@@ -100,14 +100,27 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		$local_plugins_path = dirname( __DIR__ ) . '/plugins/';
 		$mu_plugins_path    = $this->findMURelPath();
 
+		// Check if the plugin repository directory exits.
 		if ( ! is_dir( $local_plugins_path ) ) {
 			echo "Local plugins path not found: $local_plugins_path\n";
 			return;
 		}
 
+		// Check if the path is defined.
 		if ( ! is_string( $mu_plugins_path ) || empty( $mu_plugins_path ) ) {
 			echo "Mu-plugins path not found: $mu_plugins_path\n";
 			return;
+		}
+
+		// Check for a file with the same name as the expected directory.
+		if ( file_exists( $mu_plugins_path ) && ! is_dir( $mu_plugins_path ) ) {
+			echo "There is a file with the mu-plugins folder name: $mu_plugins_path\n";
+			return;
+		}
+
+		// There is no directory to copy to.
+		if ( ! file_exists( $mu_plugins_path ) && ! is_dir( $mu_plugins_path ) {
+				mkdir( $mu_plugins_path, 0755, true );
 		}
 
 		// Copy all PHP files from local_plugins_path to mu_plugins_path
