@@ -11,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       wp-must-use
  * Description:
- * Version:           0.1.0
+ * Version:           0.3.0
  * Author:            26B - IT Consulting
  * Author URI:        https://26b.io/
  * License:           GPL v3
