@@ -10,6 +10,22 @@ The plugins are provided in this bundle, but they may also be used standalone, b
 
 Use composer to install, as it is required to extract the existing plugins into the base of the `mu-plugins` folder.
 
+First configure the `extra` setting in `composer.json` so as to include the `wordpress-muplugin` composer package type as a target for the `mu-plugins/` folder.
+
+```
+{
+  "extra": {
+    "installer-paths": {
+      "mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ]
+    }
+  },
+}
+```
+
+Then require the dependency.
+
 ```bash
 composer required 26b/wp-must-use
 ```
