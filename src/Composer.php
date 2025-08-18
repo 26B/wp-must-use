@@ -119,7 +119,7 @@ class Composer implements PluginInterface, EventSubscriberInterface {
 		}
 
 		// There is no directory to copy to.
-		if ( ! file_exists( $mu_plugins_path ) && ! is_dir( $mu_plugins_path ) {
+		if ( ! file_exists( $mu_plugins_path ) && ! is_dir( $mu_plugins_path ) ) {
 				mkdir( $mu_plugins_path, 0755, true );
 		}
 
