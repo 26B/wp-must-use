@@ -6,7 +6,7 @@
  * Version:     Unreleased
  * Author:      26B
  * Author URI:  https://github.com/26B/
- * License:     GPL-2.0+
+ * License:     GPL-3.0+
  */
 
 namespace TSB\WP\MUPlugin\Customizer;

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.4.0
+
+### Changed
+
+- Update all licenses to GPL 3.
+
+### Added
+
+- `tsb-revisions` plugin to handle revision related actions. Right now it contains the revisions max as a default of 10 and includes a constante to change this.
+
 ## 0.3.0
 
 ### Fixed

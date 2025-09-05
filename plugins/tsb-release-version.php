@@ -6,7 +6,7 @@
  * Version:     1.1.0
  * Author:      Gulbenkian
  * Author URI:  https://github.com/gulbenkian/
- * License:     GPL-2.0+
+ * License:     GPL-3.0+
  */
 
 add_action(

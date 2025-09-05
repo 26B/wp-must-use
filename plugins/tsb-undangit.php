@@ -7,7 +7,7 @@
  * Version:     1.0.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
- * License:     GPL-2.0+
+ * License:     GPL-3.0+
  */
 
 add_action(
