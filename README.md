@@ -12,7 +12,7 @@ Use composer to install, as it is required to extract the existing plugins into 
 
 First configure the `extra` setting in `composer.json` so as to include the `wordpress-muplugin` composer package type as a target for the `mu-plugins/` folder.
 
-```
+```json
 {
   "extra": {
     "installer-paths": {
