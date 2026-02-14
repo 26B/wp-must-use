@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: Disable WordPress emoji's
  * Description: Disable WordPress emoji's.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
@@ -13,8 +13,6 @@ namespace TSB\WP\MUPlugin\Emojis;
 
 /**
  * Disable emoji's.
- *
- * @since  1.0.0
  * @return void
  */
 function disable_emojis() {
@@ -38,8 +36,6 @@ add_action( 'init', __NAMESPACE__ . '\\disable_emojis' );
 
 /**
  * Remove the tinymce emoji plugin.
- *
- * @since  1.0.0
  * @param  array $plugins
  * @return array
  */
@@ -55,8 +51,6 @@ add_filter( 'tiny_mce_plugins', __NAMESPACE__ . '\\disable_emojis_tinymce' );
 
 /**
  * Remove emoji CDN hostname from DNS prefetching hints.
- *
- * @since  1.0.0
  * @param  array  $urls          URLs to print for resource hints.
  * @param  string $relation_type The relation type the URLs are printed for.
  * @return array
@@ -77,3 +71,9 @@ function disable_emojis_remove_dns_prefetch( $urls, $relation_type ) {
 	return $urls;
 }
 add_filter( 'wp_resource_hints', __NAMESPACE__ . '\\disable_emojis_remove_dns_prefetch', 10, 2 );
+
+/**
+ * Disable the emoji's SVG URL.
+ * @return bool
+ */
+add_filter( 'emoji_svg_url', '__return_false' );
