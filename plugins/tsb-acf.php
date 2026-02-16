@@ -37,34 +37,27 @@ function filter_values( array $values, array &$empty, string $prefix_key = '' ) 
 			continue;
 		}
 
-		if ( $value === '' ) {
-
-			/**
-			 * Taxonomy empty values need to be passed to ACF so it clears the relationships, so
-			 * we cannot unset them. We still add them to $empty so they are deleted after ACF
-			 * has done its part.
-			 */
-			if ( get_field_object( $field_key )['type'] !== 'taxonomy' ) {
-				unset( $new_values[ $field_key ] );
-			}
-
-			$empty[ "{$prefix_key}{$field_name}" ] = $field_key;
+		if (
+			// Check for empty string.
+			$value !== ''
+			// Check for zero value metas to remove meta when something is false.
+			&& ! ( is_numeric( $value ) && 0 === (int) $value && in_array( $field['name'], apply_filters( 'tsb_acf_empty_0_metas', [] ), true ) )
+			// Pass control for any specific validation logic.
+			&& ! apply_filters( 'tsb_acf_prevent_empty_meta', false, $field, $value )
+		) {
 			continue;
 		}
 
-		if ( apply_filters( 'fcg_acf_prevent_empty_meta', false, $field, $value ) ) {
-
-			/**
-			 * Taxonomy empty values need to be passed to ACF so it clears the relationships, so
-			 * we cannot unset them. We still add them to $empty so they are deleted after ACF
-			 * has done its part.
-			 */
-			if ( get_field_object( $field_key )['type'] !== 'taxonomy' ) {
-				unset( $new_values[ $field_key ] );
-			}
-
-			$empty[ "{$prefix_key}{$field_name}" ] = $field_key;
+		/**
+		 * Taxonomy empty values need to be passed to ACF so it clears the relationships, so
+		 * we cannot unset them. We still add them to $empty so they are deleted after ACF
+		 * has done its part.
+		 */
+		if ( get_field_object( $field_key )['type'] !== 'taxonomy' ) {
+			unset( $new_values[ $field_key ] );
 		}
+
+		$empty[ "{$prefix_key}{$field_name}" ] = $field_key;
 	}
 	return $new_values;
 }
