@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: Disable Site Health
  * Description: Remove all related features for Site Health.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
@@ -20,7 +20,7 @@ namespace TSB\WP\MUPlugin\SiteHealth;
 function wp_dashboard_setup() {
 	global $wp_meta_boxes;
 
-	unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_site_health'] );
+	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_site_health'] );
 }
 add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\wp_dashboard_setup' );
 
@@ -56,4 +56,4 @@ add_action( 'current_screen', function () {
  */
 add_action( 'admin_init', function () {
 	wp_clear_scheduled_hook( 'wp_site_health_scheduled_check' );
-});
+} );

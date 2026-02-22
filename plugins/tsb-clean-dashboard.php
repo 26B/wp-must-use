@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: Clean up the WordPress dashboard
  * Description: Clean up the WordPress dashboard.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
@@ -20,6 +20,9 @@ namespace TSB\WP\MUPlugin\Dashboard;
 function wp_dashboard_setup() {
 	global $wp_meta_boxes;
 
+	// Remove the Welcome Panel.
+	remove_action( 'welcome_panel', 'wp_welcome_panel' );
+
 	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity'] );
 	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links'] );
 	unset( $wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins'] );
@@ -30,12 +33,5 @@ function wp_dashboard_setup() {
 	unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts'] );
 	unset( $wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary'] );
 }
-add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\wp_dashboard_setup' );
 
-/**
- * Remove the Welcome Panel.
- *
- * @since  1.0.0
- * @return void
- */
-remove_action( 'welcome_panel', 'wp_welcome_panel' );
+add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\wp_dashboard_setup' );
