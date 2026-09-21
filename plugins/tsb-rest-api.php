@@ -68,14 +68,28 @@ function whitelisted() {
 	/**
 	 * Allow access to specific REST API routes without authentication
 	 *
+	 * - `url` - The URL pattern to match (e.g. `/wp-json/wp/v2/posts`)
+	 * - `query_vars` - An array of query vars to allow (e.g. `['page', 'per_page']`)
+	 *
 	 * @param array $routes_without_auth An array of REST API routes to allow access without authentication
 	 */
 	$routes_without_auth = apply_filters( 'tsb_rest_api_routes_without_auth', [] );
 
-	foreach ( $routes_without_auth as $url ) {
-		$regex = '/^' . str_replace( '/', '\/', $url ) . '/';
+	foreach ( $routes_without_auth as $route ) {
+
+		// Check if the URL matches the route.
+		$regex = '/^' . str_replace( '/', '\/', $route['url'] ) . '/';
 		if ( preg_match( $regex, $_SERVER['REQUEST_URI'] ) ) {
 			return true;
+		}
+
+		// Check if the query vars are allowed.
+		if ( ! empty( $route['query_vars'] ) ) {
+			foreach ( $_GET as $key => $value ) {
+				if ( ! in_array( $key, $route['query_vars'] ) ) {
+					return false;
+				}
+			}
 		}
 	}
 
