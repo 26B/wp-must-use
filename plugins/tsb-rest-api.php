@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: REST API Improvements
  * Description: Add or change the behaviour of the REST API in WordPress.
- * Version:     1.0.0
+ * Version:     1.0.1
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
@@ -27,7 +27,7 @@ remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 /**
  * Control access to REST API.
  */
-add_filter( 'rest_authentication_errors', __NAMESPACE__ . '\\disable_api' );
+add_filter( 'rest_authentication_errors', __NAMESPACE__ . '\\disable_rest_api' );
 
 /**
  * Disable REST API for visitors not logged into WordPress
@@ -35,11 +35,16 @@ add_filter( 'rest_authentication_errors', __NAMESPACE__ . '\\disable_api' );
  * @param mixed $access
  * @return mixed
  */
-function disable_api( $access ) {
+function disable_rest_api( $access ) {
 
 	if ( ! is_user_logged_in() && ! whitelisted() ) {
 
-		$message = apply_filters( 'disable_wp_rest_api_error', __( 'REST API restricted to authenticated users.', 'disable-wp-rest-api' ) );
+		/**
+		 * Filter the error message for REST API access restriction
+		 *
+		 * @param string $message The error message to display
+		 */
+		$message = apply_filters( 'tsb_rest_api_error', __( 'REST API restricted to authenticated users.', 'disable-wp-rest-api' ) );
 
 		return new \WP_Error(
 			'rest_login_required',
@@ -65,7 +70,7 @@ function whitelisted() {
 	 *
 	 * @param array $routes_without_auth An array of REST API routes to allow access without authentication
 	 */
-	$routes_without_auth = apply_filters( 'disable_wp_rest_api_routes_without_auth', [] );
+	$routes_without_auth = apply_filters( 'tsb_rest_api_routes_without_auth', [] );
 
 	foreach ( $routes_without_auth as $url ) {
 		$regex = '/^' . str_replace( '/', '\/', $url ) . '/';

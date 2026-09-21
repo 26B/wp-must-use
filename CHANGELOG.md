@@ -5,70 +5,76 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.1
+
+### Fixed
+
+-   Some naming of functions and filters to match the plugin's naming convention.
+
 ## 0.8.0
 
 ### Added
 
-- `tsb-rest-api` plugin to customize the REST API.
+-   `tsb-rest-api` plugin to customize the REST API.
 
 ## 0.7.1
 
 ### Fixed
 
-- `tsb-site-health` now removes widget in the right prop.
-- `tsb-clean-dashboard` now removes the welcome panel inside the actions.
+-   `tsb-site-health` now removes widget in the right prop.
+-   `tsb-clean-dashboard` now removes the welcome panel inside the actions.
 
 ## 0.7.0
 
 ### Added
 
-- Add filter to `tsb_acf_prevent_empty_meta` to allow preventing empty meta values from being saved.
+-   Add filter to `tsb_acf_prevent_empty_meta` to allow preventing empty meta values from being saved.
 
 ## 0.6.0
 
 ## Added
 
-- Adds new ACF plugin for custom improvements used by 26B.
+-   Adds new ACF plugin for custom improvements used by 26B.
 
 ## 0.5.0
 
 ### Changed
 
-- Add more locks to WP update so we don't get links on live websites.
-- Add more removals in `tsb-head` and `tsb-emojis` plugins.
+-   Add more locks to WP update so we don't get links on live websites.
+-   Add more removals in `tsb-head` and `tsb-emojis` plugins.
 
 ## 0.4.0
 
 ### Changed
 
-- Update all licenses to GPL 3.
+-   Update all licenses to GPL 3.
 
 ### Added
 
-- `tsb-revisions` plugin to handle revision related actions. Right now it contains the revisions max as a default of 10 and includes a constante to change this.
+-   `tsb-revisions` plugin to handle revision related actions. Right now it contains the revisions max as a default of 10 and includes a constante to change this.
 
 ## 0.3.0
 
 ### Fixed
 
-- Attempt to create the `mu-plugins` folder when it doesn't exist (#3).
+-   Attempt to create the `mu-plugins` folder when it doesn't exist (#3).
 
 ## 0.2.0
 
 ### Added
 
-- `tsb-disable-comments` plugin to disable comments across the site.
-- `tsb-composer-autoload` support for vendor in the `wp-content` folder.
+-   `tsb-disable-comments` plugin to disable comments across the site.
+-   `tsb-composer-autoload` support for vendor in the `wp-content` folder.
 
 ## [0.1.0] - 2025-07-31
 
 ### Added
 
-- On install/update/remove of the plugin, the mu-plugins will be copied to, or deleted from, the `wp-content/mu-plugins` directory.
-- Composer class to handle copying/deleting mu-plugins.
+-   On install/update/remove of the plugin, the mu-plugins will be copied to, or deleted from, the `wp-content/mu-plugins` directory.
+-   Composer class to handle copying/deleting mu-plugins.
 
 ## [0.0.1] - 2025-07-30
 
 ### Added
 
-- Initial release with the existing collection of mu-plugins.
+-   Initial release with the existing collection of mu-plugins.
