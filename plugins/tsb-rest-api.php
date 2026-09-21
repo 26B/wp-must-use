@@ -63,8 +63,6 @@ function disable_rest_api( $access ) {
  */
 function whitelisted() {
 
-	// TODO: Add blocking by query vars.
-
 	/**
 	 * Allow access to specific REST API routes without authentication
 	 *
