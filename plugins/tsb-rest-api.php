@@ -67,7 +67,7 @@ function whitelisted() {
 	 * Allow access to specific REST API routes without authentication
 	 *
 	 * - `url` - The URL pattern to match (e.g. `/wp-json/wp/v2/posts`)
-	 * - `query_vars` - An array of query vars to allow (e.g. `['page', 'per_page']`)
+	 * - `query_vars` - An array of query vars to allow (e.g. `['page', 'per_page']`). Null if all query vars are allowed. Empty array if no query vars are allowed.
 	 *
 	 * @param array $routes_without_auth An array of REST API routes to allow access without authentication
 	 */
@@ -77,18 +77,20 @@ function whitelisted() {
 
 		// Check if the URL matches the route.
 		$regex = '/^' . str_replace( '/', '\/', $route['url'] ) . '/';
-		if ( preg_match( $regex, $_SERVER['REQUEST_URI'] ) ) {
-			return true;
+		if ( ! preg_match( $regex, $_SERVER['REQUEST_URI'] ) ) {
+			continue;
 		}
 
 		// Check if the query vars are allowed.
-		if ( ! empty( $route['query_vars'] ) ) {
+		if ( $route['query_vars'] !== null && is_array( $route['query_vars'] ) ) {
 			foreach ( $_GET as $key => $value ) {
 				if ( ! in_array( $key, $route['query_vars'] ) ) {
 					return false;
 				}
 			}
 		}
+
+		return true;
 	}
 
 	return false;
