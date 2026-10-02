@@ -5,6 +5,8 @@ release
 uploads
 .DS_Store
 .php-pre-commit
+.phpactor.json
+composer.lock
 
 .wp-env.override*.json
 languages/*.po
