@@ -73,11 +73,20 @@ function whitelisted() {
 	 */
 	$routes_without_auth = apply_filters( 'tsb_rest_api_routes_without_auth', [] );
 
+	// Get the current URL.
+	$current_url = $_SERVER['REQUEST_URI'];
+
+	// Remove the blog path from the current URL if it exists.
+	$blog_name = get_blog_details()->path;
+	if ( str_starts_with( $current_url, $blog_name ) ) {
+		$current_url = '/' . substr( $current_url, strlen( $blog_name ) );
+	}
+
 	foreach ( $routes_without_auth as $route ) {
 
 		// Check if the URL matches the route.
 		$regex = '/^' . str_replace( '/', '\/', $route['url'] ) . '/';
-		if ( ! preg_match( $regex, $_SERVER['REQUEST_URI'] ) ) {
+		if ( ! preg_match( $regex, $current_url ) ) {
 			continue;
 		}
 
