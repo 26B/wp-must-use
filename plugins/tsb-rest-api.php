@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: REST API Improvements
  * Description: Add or change the behaviour of the REST API in WordPress.
- * Version:     1.0.1
+ * Version:     2.0.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+

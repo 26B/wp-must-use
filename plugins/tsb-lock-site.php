@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: Lock Site
  * Description: Limit site access to back office users.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
