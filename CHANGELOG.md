@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Added
+
+-   Add Pest and Brain Monkey tests for the must-use plugins.
+
+### Changed
+
+-   Require PHP 8.3 or later and use PHP 8.3 in the wp-env environment.
+
+### Fixed
+
+-   Correctly detect the global Two-Factor plugin classes.
+
 ## 0.9.2
 
 ### Fixed

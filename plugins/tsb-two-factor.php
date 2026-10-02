@@ -12,7 +12,7 @@
 namespace TSB\WP\MUPlugin\TwoFactor;
 
 // Require the Two-Factor plugin classes to exist.
-if ( ! class_exists( Two_Factor_Core::class ) || ! class_exists( Two_Factor_Totp::class ) ) {
+if ( ! class_exists( \Two_Factor_Core::class ) || ! class_exists( \Two_Factor_Totp::class ) ) {
 	return;
 }
 

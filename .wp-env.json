@@ -1,6 +1,6 @@
 {
 	"plugins": ["."],
-	"phpVersion": "8.2",
+	"phpVersion": "8.3",
 	"config": {
 		"WP_DEBUG": true,
 		"WP_DEBUG_LOG": "/var/www/html/wp-content/plugins/wp-must-use/debug.log",
