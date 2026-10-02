@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 -   Correctly detect the global Two-Factor plugin classes.
+-   Match REST API allowlists against paths after `/wp-json/`; route entries are relative to that base and may include a leading slash.
 
 ## 0.9.2
 

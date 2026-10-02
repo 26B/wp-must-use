@@ -66,27 +66,24 @@ function whitelisted() {
 	/**
 	 * Allow access to specific REST API routes without authentication
 	 *
-	 * - `url` - The URL pattern to match (e.g. `/wp-json/wp/v2/posts`)
+	 * - `url` - The route path after `/wp-json/`, with or without a leading slash (e.g. `/wp/v2/posts`)
 	 * - `query_vars` - An array of query vars to allow (e.g. `['page', 'per_page']`). Null if all query vars are allowed. Empty array if no query vars are allowed.
 	 *
 	 * @param array $routes_without_auth An array of REST API routes to allow access without authentication
 	 */
 	$routes_without_auth = apply_filters( 'tsb_rest_api_routes_without_auth', [] );
 
-	// Get the current URL.
-	$current_url = $_SERVER['REQUEST_URI'];
-
-	// Remove the blog path from the current URL if it exists.
-	$blog_name = get_blog_details()->path;
-	if ( str_starts_with( $current_url, $blog_name ) ) {
-		$current_url = '/' . substr( $current_url, strlen( $blog_name ) );
+	// Match against the route part after WordPress's REST API base path.
+	$rest_url = explode( '/wp-json/', $_SERVER['REQUEST_URI'], 2 )[1] ?? null;
+	if ( $rest_url === null ) {
+		return false;
 	}
 
 	foreach ( $routes_without_auth as $route ) {
 
 		// Check if the URL matches the route.
-		$regex = '/^' . str_replace( '/', '\/', $route['url'] ) . '/';
-		if ( ! preg_match( $regex, $current_url ) ) {
+		$regex = '/^' . str_replace( '/', '\/', ltrim( $route['url'], '/' ) ) . '/';
+		if ( ! preg_match( $regex, $rest_url ) ) {
 			continue;
 		}
 

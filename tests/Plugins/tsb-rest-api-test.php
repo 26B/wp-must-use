@@ -26,19 +26,24 @@ test( 'REST API access honors authentication, route allowlists, and query vars',
 	Functions\when( 'is_user_logged_in' )->alias( function () use ( &$loggedIn ) {
 		return $loggedIn;
 	} );
-	Functions\when( 'get_blog_details' )->justReturn( (object) [ 'path' => '/blog/' ] );
 	Functions\when( '__' )->alias( fn ( $message ) => $message );
 	Functions\when( 'rest_authorization_required_code' )->justReturn( 401 );
 	$_SERVER['REQUEST_URI'] = '/blog/wp-json/public';
 	$_GET = [ 'page' => '2' ];
 
-	$allowedRoute = [ [ 'url' => '/wp-json/public', 'query_vars' => [ 'page' ] ] ];
-	Filters\expectApplied( 'tsb_rest_api_routes_without_auth' )->times( 3 )->andReturn( $allowedRoute, $allowedRoute, [] );
+	$slashRoute = [ [ 'url' => '/public', 'query_vars' => [ 'page' ] ] ];
+	$bareRoute  = [ [ 'url' => 'public', 'query_vars' => null ] ];
+	Filters\expectApplied( 'tsb_rest_api_routes_without_auth' )->times( 5 )->andReturn( $slashRoute, $bareRoute, $slashRoute, $slashRoute, [] );
+	expect( TSB\WP\MUPlugin\RESTAPI\whitelisted() )->toBeTrue();
 	expect( TSB\WP\MUPlugin\RESTAPI\whitelisted() )->toBeTrue();
 
 	$_GET['unexpected'] = 'no';
 	expect( TSB\WP\MUPlugin\RESTAPI\whitelisted() )->toBeFalse();
 	unset( $_GET['unexpected'] );
+
+	$_SERVER['REQUEST_URI'] = '/blog/not-wp-json/public';
+	expect( TSB\WP\MUPlugin\RESTAPI\whitelisted() )->toBeFalse();
+	$_SERVER['REQUEST_URI'] = '/blog/wp-json/public';
 
 	Filters\expectApplied( 'tsb_rest_api_error' )->once()->andReturn( 'Custom restriction' );
 	$error = TSB\WP\MUPlugin\RESTAPI\disable_rest_api( null );
