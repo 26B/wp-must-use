@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   GitHub Actions tests across PHP 8.3, 8.4, and 8.6.
 
+### Changed
+
+-   Allow Pest 5 on PHP 8.4 and later while retaining Pest 4 support for PHP 8.3.
+
 ## 0.10.0
 
 ### Added
