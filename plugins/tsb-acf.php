@@ -121,3 +121,29 @@ function prevent_empty_meta( $post_id ) : void {
 
 // Priority needs to be before 10, so we can change what ACF saves.
 add_action( 'acf/save_post', __NAMESPACE__ . '\\prevent_empty_meta', 9 );
+
+/**
+ * Fix ACF detecting the block editor on screens that are not the block editor.
+ *
+ * ACF checks for the `core/edit-post` store, which is registered on every admin screen
+ * where `wp-edit-post` is enqueued (e.g. by Unbabble). ACF then calls `editPost` with no
+ * post loaded, which throws "The entity being edited (postType, undefined) does not have
+ * a loaded config".
+ *
+ * @since 1.0.1
+ * @return void
+ */
+function fix_gutenberg_detection() : void {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if ( $screen && $screen->is_block_editor() ) {
+		return;
+	}
+
+	wp_add_inline_script( 'acf', 'acf.isGutenbergPostEditor = function () { return false; };' );
+}
+
+add_action( 'acf/input/admin_enqueue_scripts', __NAMESPACE__ . '\\fix_gutenberg_detection' );
