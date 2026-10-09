@@ -71,6 +71,12 @@ function filter_values( array $values, array &$empty, string $prefix_key = '' ) 
  * @return void
  */
 function delete_old_meta( int $post_id, array $empty ) : void {
+
+	// delete_post_meta() redirects revisions to the parent, which would wipe the live post on preview.
+	if ( wp_is_post_revision( $post_id ) ) {
+		return;
+	}
+
 	$current_values = get_post_meta( $post_id );
 	foreach ( $empty as $empty_key => $field_key ) {
 		if ( ! isset( $current_values[ $empty_key ] ) ) {
