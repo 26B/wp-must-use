@@ -22,6 +22,7 @@ test( 'ACF empty values are removed and tracked for meta cleanup', function () {
 	expect( $filtered )->toBe( [ 'field_tax' => '', 'unknown' => 'keep' ] );
 	expect( $empty )->toBe( [ 'title' => 'field_title', 'topics' => 'field_tax' ] );
 
+	Functions\when( 'wp_is_post_revision' )->justReturn( false );
 	Functions\when( 'get_post_meta' )->justReturn( [ 'title' => [ 'old' ], '_title' => [ 'field_title' ] ] );
 	Functions\expect( 'delete_post_meta' )->once()->with( 42, 'title' );
 	Functions\expect( 'delete_post_meta' )->once()->with( 42, '_title', 'field_title' );
