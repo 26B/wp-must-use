@@ -88,7 +88,7 @@ function whitelisted() {
 		}
 
 		// Check if the query vars are allowed.
-		if ( $route['query_vars'] !== null && is_array( $route['query_vars'] ) ) {
+		if ( isset( $route['query_vars'] ) && $route['query_vars'] !== null && is_array( $route['query_vars'] ) ) {
 			foreach ( $_GET as $key => $value ) {
 				if ( ! in_array( $key, $route['query_vars'] ) ) {
 					return false;
