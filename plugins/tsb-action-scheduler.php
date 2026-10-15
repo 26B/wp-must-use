@@ -77,23 +77,26 @@ function notify_failure( int $action_id, string $reason ) : void {
 					]
 				)
 			);
+			$admins = array_values( array_combine( wp_list_pluck( $admins, 'ID' ), $admins ) );
 		}
 	}
 
+	// Get emails of all administrators and super administrators.
+	$emails = array_unique( array_filter( wp_list_pluck( (array) $admins, 'user_email' ), 'is_email' ) );
+	if ( empty( $emails ) ) {
+		return;
+	}
+
 	/**
-	 * Filter the administrators notified about a failed Action Scheduler job.
+	 * Filter the emails notified about a failed Action Scheduler job.
 	 *
+	 * @param array                  $emails    Email addresses of the administrators and super administrators.
 	 * @param array                  $admins    Users with ID, user_login and user_email.
 	 * @param int                    $action_id Failed action ID.
 	 * @param ActionScheduler_Action $action    Failed action.
 	 * @param string                 $reason    Failure reason.
 	 */
-	$admins = apply_filters( 'tsb_action_scheduler_failure_recipients', $admins, $action_id, $action, $reason );
-
-	$emails = array_unique( array_filter( wp_list_pluck( (array) $admins, 'user_email' ), 'is_email' ) );
-	if ( empty( $emails ) ) {
-		return;
-	}
+	$emails = apply_filters( 'tsb_action_scheduler_failure_recipients', $emails, $admins, $action_id, $action, $reason );
 
 	$site_name = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 
