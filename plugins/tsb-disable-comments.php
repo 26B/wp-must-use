@@ -3,7 +3,7 @@
  * @wordpress-plugin
  * Plugin Name: Disable comments
  * Description: Hide or remove commenting feature.
- * Version:     Unreleased
+ * Version:     1.0.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+

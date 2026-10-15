@@ -3,11 +3,17 @@
  * @wordpress-plugin
  * Plugin Name: Action Scheduler failure notifications
  * Description: Email the site administrators when an Action Scheduler job fails.
- * Version:     Unreleased
+ * Version:     1.0.0
  * Author:      26B
  * Author URI:  https://github.com/26B/
  * License:     GPL-3.0+
  */
+
+namespace TSB\WP\MUPlugin\ActionScheduler;
+
+if ( ! class_exists( '\ActionScheduler' ) || ! is_plugin_active( 'action-scheduler/action-scheduler.php' ) ) {
+	return;
+}
 
 // Hook into Action Scheduler events to notify administrators of failures.
 add_action(
@@ -15,42 +21,28 @@ add_action(
 	function () {
 		add_action(
 			'action_scheduler_failed_execution',
-			function ( $action_id, $exception ) {
-				tsb_action_scheduler_notify_failure( (int) $action_id, $exception->getMessage() );
-			},
+			fn ( $action_id, $exception ) => notify_failure( (int) $action_id, $exception->getMessage() ),
 			10,
 			2
 		);
 
 		add_action(
 			'action_scheduler_failed_validation',
-			function ( $action_id, $exception ) {
-				tsb_action_scheduler_notify_failure( (int) $action_id, $exception->getMessage() );
-			},
+			fn ( $action_id, $exception ) => notify_failure( (int) $action_id, $exception->getMessage() ),
 			10,
 			2
 		);
 
 		add_action(
 			'action_scheduler_failed_action',
-			function ( $action_id, $timeout ) {
-				tsb_action_scheduler_notify_failure(
-					(int) $action_id,
-					sprintf( 'Action timed out after %d seconds.', (int) $timeout )
-				);
-			},
+			fn ( $action_id, $timeout ) => notify_failure( (int) $action_id, sprintf( 'Action timed out after %d seconds.', (int) $timeout ) ),
 			10,
 			2
 		);
 
 		add_action(
 			'action_scheduler_unexpected_shutdown',
-			function ( $action_id, $error ) {
-				tsb_action_scheduler_notify_failure(
-					(int) $action_id,
-					sprintf( 'Unexpected shutdown: %s', $error['message'] ?? '' )
-				);
-			},
+			fn ( $action_id, $error ) => notify_failure( (int) $action_id, sprintf( 'Unexpected shutdown: %s', $error['message'] ?? '' ) ),
 			10,
 			2
 		);
@@ -64,7 +56,7 @@ add_action(
  * @param string $reason    Failure reason.
  * @return void
  */
-function tsb_action_scheduler_notify_failure( int $action_id, string $reason ) : void {
+function notify_failure( int $action_id, string $reason ) : void {
 	$action = \ActionScheduler::store()->fetch_action( $action_id );
 
 	$admins = get_users(
@@ -73,6 +65,20 @@ function tsb_action_scheduler_notify_failure( int $action_id, string $reason ) :
 			'fields' => [ 'ID', 'user_login', 'user_email' ],
 		]
 	);
+	if ( is_multisite() ) {
+		$super_admins = get_super_admins();
+		if ( ! empty( $super_admins ) ) {
+			$admins = array_merge(
+				$admins,
+				get_users(
+					[
+						'login__in' => $super_admins,
+						'fields'    => [ 'ID', 'user_login', 'user_email' ],
+					]
+				)
+			);
+		}
+	}
 
 	/**
 	 * Filter the administrators notified about a failed Action Scheduler job.
