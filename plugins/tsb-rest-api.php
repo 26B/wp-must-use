@@ -32,7 +32,7 @@ add_filter( 'rest_authentication_errors', __NAMESPACE__ . '\\disable_rest_api' )
 /**
  * Add CORS headers for REST API.
  */
-add_action( 'rest_api_init', 'register_cors_headers_hooks' );
+add_action( 'rest_api_init', __NAMESPACE__ . '\\register_cors_headers_hooks' );
 
 /**
  * Register CORS headers hooks.
