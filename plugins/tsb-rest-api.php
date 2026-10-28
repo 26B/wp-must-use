@@ -55,8 +55,8 @@ function rest_send_cors_headers( $value ) {
 		'Access-Control-Allow-Credentials' => 'true',
 	];
 	$headers = \apply_filters( 'tsb_rest_api_cors_headers', $headers );
-	foreach ( $headers as $key => $value ) {
-		header( "$key: $value" );
+	foreach ( $headers as $key => $header_value ) {
+		header( "$key: $header_value" );
 	}
 
 	return $value;
