@@ -30,6 +30,39 @@ remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 add_filter( 'rest_authentication_errors', __NAMESPACE__ . '\\disable_rest_api' );
 
 /**
+ * Add CORS headers for REST API.
+ */
+add_action( 'rest_api_init', 'register_cors_headers_hooks' );
+
+/**
+ * Register CORS headers hooks.
+ */
+function register_cors_headers_hooks() {
+	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+	add_filter( 'rest_pre_serve_request', __NAMESPACE__ . '\\rest_send_cors_headers', 10 );
+}
+
+/**
+ * Sends Cross-Origin Resource Sharing headers with API requests.
+ *
+ * @param mixed $value Response data.
+ * @return mixed Response data.
+ */
+function rest_send_cors_headers( $value ) {
+	$headers = [
+		'Access-Control-Allow-Origin'      => \network_home_url(),
+		'Access-Control-Allow-Methods'     => 'OPTIONS, GET, POST, PUT, PATCH, DELETE',
+		'Access-Control-Allow-Credentials' => 'true',
+	];
+	$headers = \apply_filters( 'tsb_rest_api_cors_headers', $headers );
+	foreach ( $headers as $key => $value ) {
+		header( "$key: $value" );
+	}
+
+	return $value;
+}
+
+/**
  * Disable REST API for visitors not logged into WordPress
  *
  * @param mixed $access
